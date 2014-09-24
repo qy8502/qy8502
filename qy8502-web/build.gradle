@@ -1,0 +1,24 @@
+
+ext{
+	//apply plugin: 'spring-boot'
+	apply plugin: 'eclipse-wtp'
+	apply plugin: 'war'
+	
+	
+	//springBoot {
+	//	mainClass = "main.QY8502Web"
+	//}
+	
+		
+	dependencies {
+		compile project(":qy8502-app")
+		compile ("org.axonframework:axon-core:2.3.1")
+		//provided ("javax.servlet:javax.servlet-api:3.0.1")
+		provided ("javax.servlet:servlet-api:2.5")
+		compile ("org.springframework:spring-webmvc:${springVersion}")
+		compile ("com.fasterxml.jackson.core:jackson-databind:2.4.2")
+		//testCompile("org.springframework.boot:spring-boot-starter-jetty:1.1.6.RELEASE")
+		//testCompile("org.springframework.boot:spring-boot-starter-web:1.1.6.RELEASE") 
+	   
+	}
+}

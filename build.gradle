@@ -1,0 +1,54 @@
+
+/*buildscript {
+    repositories {
+    	maven {
+        	url "http://maven.oschina.net/content/groups/public/"
+    	}
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.6.RELEASE")
+    }
+}*/
+
+ext{
+	springVersion = "3.2.5.RELEASE"
+	//springVersion = "4.1.0.RELEASE"
+	slf4jVersion = "1.6.4"
+	log4jVersion = "2.0.2"
+}
+	
+allprojects {
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	
+	configurations {
+	    provided
+	}
+	
+	sourceSets {
+	    main.compileClasspath += configurations.provided
+	    test.compileClasspath += configurations.provided
+	    test.runtimeClasspath += configurations.provided
+	}
+	
+	dependencies {
+		compile ("org.springframework:spring-context:${springVersion}")
+		compile ("org.springframework:spring-tx:${springVersion}")
+		//compile ("org.slf4j:slf4j-api:${slf4jVersion}")
+		compile ("org.slf4j:slf4j-log4j12:${slf4jVersion}")
+		//compile ("org.apache.logging.log4j:log4j:${log4jVersion}")
+		testCompile ("org.springframework:spring-test:${springVersion}")
+		testCompile ("junit:junit:4.5")
+	}
+	
+	repositories { 	
+		maven { url "http://maven.oschina.net/content/groups/public/" }
+		maven { url "http://maven.oschina.net/content/repositories/thirdparty" }
+        mavenCentral()
+	}
+	
+	tasks.withType(Compile) {
+		options.encoding = "UTF-8"
+	}
+}

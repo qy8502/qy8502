@@ -1,0 +1,11 @@
+ext{
+		
+	dependencies {
+		compile ("com.sina.sae:sae-local:1.1.0")
+		compile ("org.apache.derby:derby:10.11.1.1")
+		compile ("org.axonframework:axon-core:2.3")
+		//compile ("org.axonframework:axon-mongo:2.3")
+		//compile ("org.axonframework.incubator:axon-googleappengine:2.3")
+	   
+	}
+}

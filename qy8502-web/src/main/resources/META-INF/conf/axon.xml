@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:axon="http://www.axonframework.org/schema/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.axonframework.org/schema/core http://www.axonframework.org/schema/axon-core-2.0.xsd">
+	<axon:annotation-config />
+	<bean class="com.sinaapp.qy8502.app.ToDoEventHandler" />
+	<axon:command-bus id="commandBus" />
+	<axon:event-bus id="eventBus" />
+	<bean
+		class="org.axonframework.commandhandling.gateway.CommandGatewayFactoryBean">
+		<property name="commandBus" ref="commandBus" />
+	</bean>
+	<bean id="taskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="2" />
+		<property name="maxPoolSize" value="5" />
+		<property name="waitForTasksToCompleteOnShutdown" value="true" />
+	</bean>
+	<axon:event-sourcing-repository id="toDoRepository"
+		event-bus="eventBus" event-store="eventStore" aggregate-type="com.sinaapp.qy8502.app.ToDoItem">
+		<axon:snapshotter-trigger
+			event-count-threshold="5" snapshotter-ref="snapshotter" />
+	</axon:event-sourcing-repository>
+	<axon:aggregate-command-handler id="toDoItemHandler"
+		aggregate-type="com.sinaapp.qy8502.app.ToDoItem" repository="toDoRepository"
+		command-bus="commandBus" />
+	<axon:snapshotter id="snapshotter" event-store="eventStore"
+		executor="taskExecutor" />
+
+
+	<bean id="saeKVFactory" class="org.axonframework.sae.eventstore.SimpleSeaKVFactory" />
+	<bean id="eventStore" class="org.axonframework.sae.eventstore.KVDBEventStore">
+		<constructor-arg ref="saeKVFactory" />
+	</bean>
+</beans>

@@ -1,0 +1,10 @@
+/bin/
+/build/
+/.gradle/
+/.settings/
+**/bin/
+**/build/
+**/.settings/
+**/derby.log
+**/events
+**/kvdb
