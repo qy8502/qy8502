@@ -13,13 +13,10 @@ public class ToDoEventHandler {
 	public void handle(ToDoItemCreatedEvent event) {
 		logger.warn("We've got something to do: " + event.getDescription()
 				+ " (" + event.getTodoId() + ")");
-		// System.out.println("We've got something to do: "
-		// + event.getDescription() + " (" + event.getTodoId() + ")");
 	}
 
 	@EventHandler
 	public void handle(ToDoItemCompletedEvent event) {
 		logger.warn("We've completed a task: " + event.getTodoId());
-		// System.out.println("We've completed a task: " + event.getTodoId());
 	}
 }
